@@ -45,7 +45,7 @@ module.exports = {
     sourceMap: false,
     loaderOptions: {
       scss: {
-        prependData: `@import "@assets/style/global.scss";`
+        prependData: "@import '@assets/style/global.scss'"
       }
     }
   },
@@ -55,7 +55,7 @@ module.exports = {
       warnings: true,
       errors: true
     },
-    open: false, // 是否打开浏览器
+    open: true, // 是否打开浏览器
     host: "localhost",
     port: "8080",
     https: false,
@@ -124,11 +124,12 @@ module.exports = {
       Object.assign(config, {
         externals: externals
       });
+      // 去掉注释
       plugins.push(
         new UglifyJsPlugin({
           uglifyOptions: {
             output: {
-              comments: false // 去掉注释
+              comments: false
             },
             warnings: false,
             compress: {
@@ -139,6 +140,7 @@ module.exports = {
           }
         })
       );
+      // gzip压缩
       plugins.push(
         new CompressionWebpackPlugin({
           filename: "[path].gz[query]",
