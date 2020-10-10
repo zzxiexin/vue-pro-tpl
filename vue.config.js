@@ -34,7 +34,7 @@ const cdn = {
 module.exports = {
   publicPath: isProduction ? process.env.VUE_APP_PUBLIC_PATH : "/", // 根据部署的目录名决定
   outputDir: "dist", // 也可以在不用的环境配置文件配置，免去每次修改的麻烦
-  assetsDir: "", // 相对于outputDir的静态资源(js、css、img、fonts)目录
+  assetsDir: "app", // 相对于outputDir的静态资源(js、css、img、fonts)目录
   lintOnSave: false, // 代码保存是否触发格式化
   runtimeCompiler: true, // 是否使用包含运行时编译器的 Vue 构建版本
   productionSourceMap: !isProduction, // 生产环境的 source map
@@ -75,6 +75,16 @@ module.exports = {
   chainWebpack: config => {
     // 修复HMR(热更新)
     config.resolve.symlinks(true);
+    // CDN
+    config.plugin("html").tap(args => {
+      if (isProduction) {
+        args[0].cdn = cdn.build;
+      }
+      if (process.env.NODE_ENV === "development") {
+        args[0].cdn = cdn.dev;
+      }
+      return args;
+    });
     // 配置别名
     config.resolve.alias
       .set("@", resolve("src"))
@@ -87,15 +97,6 @@ module.exports = {
     if (isProduction) {
       Object.assign(config, {
         externals
-      });
-      config.plugin("html").tap(args => {
-        if (process.env.NODE_ENV === "production") {
-          args[0].cdn = cdn.build;
-        }
-        if (process.env.NODE_ENV === "development") {
-          args[0].cdn = cdn.dev;
-        }
-        return args;
       });
       // 打包性能分析
       config.plugin("webpack-report").use(BundleAnalyzerPlugin, [

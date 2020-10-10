@@ -3,6 +3,7 @@
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
+      <img src="@/assets/images/2.jpg" alt="" />
     </div>
     <router-view />
   </div>
@@ -11,6 +12,9 @@
 export default {
   created() {
     console.log(process.env);
+    this.$http.module_1.getIpAdr().then(res => {
+      console.log(res);
+    });
   }
 };
 </script>
@@ -21,6 +25,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  background: $bg;
 }
 
 #nav {
