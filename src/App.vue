@@ -18,9 +18,15 @@ import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
 export default {
   name: "app_vue",
   computed: {
+    // mapState三种获取方式
+    // ...mapState('login', ['count']),
     ...mapState({
       count: state => state.login.count
     }),
+    // count(){
+    //   return this.$store.state.login.count
+    // },
+    // mapGetters映射
     ...mapGetters({
       count1: "login/getCount"
     })
@@ -34,13 +40,19 @@ export default {
     });
   },
   methods: {
-    ...mapMutations({
-      setCount: "login/setCount",
-      decreaseCount: "login/decreaseCount"
-    }),
-    ...mapActions({
-      asyncSetCount: "login/asyncSetCount"
-    })
+    // mapMutations、mapActions映射方式(arr、obj)
+    // ...mapMutations({
+    //   setCount: "login/setCount",
+    //   decreaseCount: "login/decreaseCount"
+    // }),
+    ...mapMutations("login", [
+      "setCount", // 将 `this.setCount()` 映射为 `this.$store.commit('login/setCount')`
+      "decreaseCount"
+    ]),
+    // ...mapActions({
+    //   asyncSetCount: "login/asyncSetCount"
+    // })
+    ...mapActions("login", ["asyncSetCount"])
   }
 };
 </script>
