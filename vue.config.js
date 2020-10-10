@@ -39,13 +39,21 @@ module.exports = {
   runtimeCompiler: true, // 是否使用包含运行时编译器的 Vue 构建版本
   productionSourceMap: !isProduction, // 生产环境的 source map
   parallel: require("os").cpus().length > 1, // 多线程生产打包(仅用于生产打包)
-  pwa: {},
+  pwa: {
+    iconPaths: {
+      favicon32: "img/icons/favicon-32x32.png",
+      favicon16: "img/icons/favicon-16x16.png",
+      appleTouchIcon: "img/icons/apple-touch-icon-152x152.png",
+      maskIcon: "img/icons/safari-pinned-tab.svg",
+      msTileImage: "img/icons/msapplication-icon-144x144.png"
+    }
+  },
   css: {
     extract: isProduction,
     sourceMap: false,
     loaderOptions: {
       scss: {
-        prependData: "@import '@assets/style/global.scss'"
+        prependData: "@import '@assets/style/global.scss';"
       }
     }
   },
