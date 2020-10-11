@@ -11,6 +11,7 @@
   "dependencies": {
     "axios": "^0.20.0",
     "core-js": "^3.6.5",
+    "http-server": "^0.12.3",
     "lib-flexible": "^0.3.2",
     "postcss-px2rem": "^0.3.0",
     "register-service-worker": "^1.7.1",
