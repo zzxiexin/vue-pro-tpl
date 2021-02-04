@@ -5,9 +5,10 @@ import router from "./router";
 import store from "./store";
 import http from "@/api";
 import "lib-flexible";
+import { directive } from "./directive";
 Vue.config.productionTip = false;
 Vue.prototype.$http = http;
-
+directive(Vue, ["add", "del"]);
 new Vue({
   router,
   store,
